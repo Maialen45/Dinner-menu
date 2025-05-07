@@ -82,17 +82,25 @@ function filtrarOpciones(tipoMenu, tipoPlato) {
 function promptOpciones(mensaje, tipoMenu, tipoPlato) {
     while (true) {
         const plato = prompt(
-            `Elige un ${mensaje}: \n` +
+            `Elige un ${mensaje.toLowerCase()}: \n` +
                 platos(`\n--- ${mensaje} ---`, tipoMenu, tipoPlato)
         );
 
         const opciones = filtrarOpciones(tipoMenu, tipoPlato);
 
-        if (opciones.includes(plato.toLowerCase())) {
-            alert(randomComentario(comentarios));
-            break;
+        if (plato !== null) {
+            if (opciones.includes(plato.toLowerCase())) {
+                alert(randomComentario(comentarios));
+                break;
+            } else {
+                alert(
+                    `El ${mensaje.toLowerCase()} debe encontrarse entre las opciones`
+                );
+            }
         } else {
-            alert("El primer plato debe encontrarse entre las opciones");
+            alert(
+                `El ${mensaje.toLowerCase()} debe encontrarse entre las opciones`
+            );
         }
     }
 }
@@ -110,16 +118,24 @@ function comenzarPedido() {
             if (hora >= 5 && hora <= 11) {
                 menuCompleto(menuDesayuno);
                 promptOpciones("Plato Principal", menuDesayuno, "primero");
+                promptOpciones("Plato Secundario", menuDesayuno, "segundo");
+                promptOpciones("Postre", menuDesayuno, "postre");
+                break;
             } else if (hora >= 12 && hora <= 17) {
                 menuCompleto(menuComida);
                 promptOpciones("Plato Principal", menuComida, "primero");
+                promptOpciones("Plato Secundario", menuComida, "segundo");
+                promptOpciones("Postre", menuComida, "postre");
+                break;
             } else if (hora >= 18 && hora <= 23) {
                 menuCompleto(menuCena);
                 promptOpciones("Plato Principal", menuCena, "primero");
+                promptOpciones("Plato Secundario", menuCena, "segundo");
+                promptOpciones("Postre", menuCena, "postre");
+                break;
             } else {
                 alert("En este horario no tenemos servicio.");
             }
-            break;
         } else {
             alert("La hora debe ser un número de dos dígitos entre 00 y 23");
         }
