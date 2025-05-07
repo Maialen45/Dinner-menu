@@ -66,8 +66,6 @@ function menuCompleto(tipoMenu) {
         platos("\n--- Segundo Plato ---", tipoMenu, "segundo") +
         platos("\n--- Postres ---", tipoMenu, "postre");
 
-    // const cartaCompleta = carta.join("\n");
-
     alert(menu);
 }
 
@@ -113,9 +111,7 @@ function promptOpciones(mensaje, tipoMenu, tipoPlato) {
                 );
             }
         } else {
-            alert(
-                `El ${mensaje.toLowerCase()} debe encontrarse entre las opciones`
-            );
+            alert(`Introduce un ${mensaje.toLowerCase()}`);
         }
     }
 }
@@ -165,7 +161,7 @@ function comenzarPedido() {
                 factura(platosElegidos);
                 break;
             } else {
-                alert("En este horario no tenemos servicio.");
+                alert("En este horario no tenemos servicio");
             }
         } else {
             alert("La hora debe ser un número de dos dígitos entre 00 y 23");
