@@ -73,10 +73,28 @@ function filtrarOpciones(tipoMenu, tipoPlato) {
     const opciones = [];
     tipoMenu.forEach((item) => {
         if (item.tipo == tipoPlato) {
-            opciones.push(item.nombre.toLocaleLowerCase());
+            opciones.push(item.nombre.toLowerCase());
         }
     });
     return opciones;
+}
+
+function promptOpciones(mensaje, tipoMenu, tipoPlato) {
+    while (true) {
+        const plato = prompt(
+            `Elige un ${mensaje}: \n` +
+                platos(`\n--- ${mensaje} ---`, tipoMenu, tipoPlato)
+        );
+
+        const opciones = filtrarOpciones(tipoMenu, tipoPlato);
+
+        if (opciones.includes(plato.toLowerCase())) {
+            alert(randomComentario(comentarios));
+            break;
+        } else {
+            alert("El primer plato debe encontrarse entre las opciones");
+        }
+    }
 }
 
 function comenzarPedido() {
@@ -91,34 +109,13 @@ function comenzarPedido() {
             const hora = parseInt(bienvenida);
             if (hora >= 5 && hora <= 11) {
                 menuCompleto(menuDesayuno);
-
-                while (true) {
-                    const platoPrincipal = prompt(
-                        "Elige un plato principal: \n" +
-                            platos(
-                                "\n--- Plato Principal ---",
-                                menuDesayuno,
-                                "primero"
-                            )
-                    );
-
-                    const opcionesPP = filtrarOpciones(menuDesayuno, "primero");
-                    if (
-                        opcionesPP.includes(platoPrincipal.toLocaleLowerCase())
-                    ) {
-                        alert(randomComentario(comentarios));
-                        break;
-                    } else {
-                        alert(
-                            "El primer plato debe encontrarse entre las opciones"
-                        );
-                        break;
-                    }
-                }
+                promptOpciones("Plato Principal", menuDesayuno, "primero");
             } else if (hora >= 12 && hora <= 17) {
                 menuCompleto(menuComida);
+                promptOpciones("Plato Principal", menuComida, "primero");
             } else if (hora >= 18 && hora <= 23) {
                 menuCompleto(menuCena);
+                promptOpciones("Plato Principal", menuCena, "primero");
             } else {
                 alert("En este horario no tenemos servicio.");
             }
