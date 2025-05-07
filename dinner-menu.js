@@ -34,13 +34,15 @@ menuCena = [
     { tipo: "postre", nombre: "Brownie de chocolate", precio: 3.75 },
 ];
 
-comentarios = [
+let comentarios = [
     "Esa opción nunca falla",
     "Esa es la especialidad de la casa",
     "¡Qué buena elección!",
     "Wow, ese también es mi plato favorito",
     "Ese plato está increíble",
 ];
+
+let platosElegidos = [];
 
 function randomComentario(array) {
     const indice = Math.floor(Math.random() * array.length);
@@ -76,6 +78,7 @@ function filtrarOpciones(tipoMenu, tipoPlato) {
             opciones.push(item.nombre.toLowerCase());
         }
     });
+    console.log(opciones);
     return opciones;
 }
 
@@ -90,6 +93,18 @@ function promptOpciones(mensaje, tipoMenu, tipoPlato) {
 
         if (plato !== null) {
             if (opciones.includes(plato.toLowerCase())) {
+                tipoMenu.forEach((item) => {
+                    if (
+                        item.tipo === tipoPlato &&
+                        item.nombre.toLowerCase() === plato.toLowerCase()
+                    ) {
+                        platosElegidos.push({
+                            nombre: item.nombre,
+                            precio: item.precio,
+                        });
+                    }
+                });
+
                 alert(randomComentario(comentarios));
                 break;
             } else {
@@ -103,6 +118,19 @@ function promptOpciones(mensaje, tipoMenu, tipoPlato) {
             );
         }
     }
+}
+
+function factura(platosElegidos) {
+    let resumen = "--- Factura del menú ---\n";
+    let total = 0;
+
+    platosElegidos.forEach((plato) => {
+        resumen += `${plato.nombre} - ${plato.precio} €\n`;
+        total += plato.precio;
+    });
+
+    resumen += `\nTotal: ${total.toFixed(2)} €`;
+    alert(resumen);
 }
 
 function comenzarPedido() {
@@ -120,18 +148,21 @@ function comenzarPedido() {
                 promptOpciones("Plato Principal", menuDesayuno, "primero");
                 promptOpciones("Plato Secundario", menuDesayuno, "segundo");
                 promptOpciones("Postre", menuDesayuno, "postre");
+                factura(platosElegidos);
                 break;
             } else if (hora >= 12 && hora <= 17) {
                 menuCompleto(menuComida);
                 promptOpciones("Plato Principal", menuComida, "primero");
                 promptOpciones("Plato Secundario", menuComida, "segundo");
                 promptOpciones("Postre", menuComida, "postre");
+                factura(platosElegidos);
                 break;
             } else if (hora >= 18 && hora <= 23) {
                 menuCompleto(menuCena);
                 promptOpciones("Plato Principal", menuCena, "primero");
                 promptOpciones("Plato Secundario", menuCena, "segundo");
                 promptOpciones("Postre", menuCena, "postre");
+                factura(platosElegidos);
                 break;
             } else {
                 alert("En este horario no tenemos servicio.");
