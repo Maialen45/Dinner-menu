@@ -42,12 +42,12 @@ let comentarios = [
     "Ese plato está increíble",
 ];
 
-let platosElegidos = [];
-
 function randomComentario(array) {
     const indice = Math.floor(Math.random() * array.length);
     return array[indice];
 }
+
+let platosElegidos = [];
 
 function platos(mensaje = "", tipoMenu, tipoPlato) {
     let carta = `${mensaje}\n`;
@@ -153,23 +153,17 @@ function comenzarPedido() {
                 promptOpciones("Postre", menuComida, "postre");
                 factura(platosElegidos);
                 break;
-            } else if (hora >= 18 && hora <= 23) {
+            } else if ((hora >= 18 && hora <= 23) || (hora >= 0 && hora <= 4)) {
                 menuCompleto(menuCena);
                 promptOpciones("Plato Principal", menuCena, "primero");
                 promptOpciones("Plato Secundario", menuCena, "segundo");
                 promptOpciones("Postre", menuCena, "postre");
                 factura(platosElegidos);
                 break;
-            } else {
-                alert("En este horario no tenemos servicio");
             }
         } else {
             alert("La hora debe ser un número de dos dígitos entre 00 y 23");
         }
-
-        // if (hora > 5 && hora < 11) {
-        //     carta(menuDesayuno);
-        // }
     }
 }
 
